@@ -79,15 +79,24 @@ function saveCategoriesToDatabase($originalCount, $newCount){
         array_push($categoryPackage, $category);
     };
 
+
     $testthis = mysqli_query(initialConnection(),"SELECT * FROM table5060");
 
+$firstValues = [];
     //ACTUAL DATABASE VALUES FOR COLUMN NAMES
-    $testthis = array_keys(mysqli_fetch_assoc($testthis));
-    $differencesAdd = array_diff($categoryPackage,$testthis);
-    $differencesDelete = array_diff($testthis, $categoryPackage);
+    if($testthis != null){
 
-echo count($differencesAdd);
-    echo count($differencesDelete);
+        $testthis = array_keys(mysqli_fetch_assoc($testthis));
+
+        for ($i=2;$i<count($testthis);$i++){
+            array_push($firstValues, $testthis[$i]);
+        }
+
+        $differencesAdd = array_diff($categoryPackage,$firstValues);
+        $differencesDelete = array_diff($firstValues, $categoryPackage);
+
+
+    }
 
     //CREATE A COOKIE IF IT DOES NOT ALREADY EXIST
     if(!$_COOKIE["table_name"]){
@@ -100,15 +109,20 @@ echo count($differencesAdd);
         createNewTable($categoryPackage, 'table5060');
         createNewUI(count($values), $categoryPackage, 'table5060');
     } else{
-
-            if(count($testthis) < count($categoryPackage)){
-                $differences = array_diff($categoryPackage,$testthis);
+            if(count($firstValues) < count($categoryPackage)){
+                $differences = array_diff($categoryPackage,$firstValues);
                 updateTable($differences, 'table5060');
+                echo 'updated';
             } else {
-                $differences = array_diff($testthis, $categoryPackage);
+                $differences = array_diff($firstValues, $categoryPackage);
+                print_r($differences);
                 deleteTable($differences, 'table5060');
             }
 
+        //need to pass in array of arrays for category package so that multiple rows can be made
+        // // IDEAS:
+        // // Gather all PIDs in database, use them to return all rows, push each row in to an array, pass that array
+        // // MYSQLi fetch array
         createNewUI(count($values), $categoryPackage, 'table5060');
     };
 

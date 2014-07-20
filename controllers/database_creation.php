@@ -25,6 +25,8 @@ function createNewTable($categoryPackage, $tableName){
     //CLOSE UP SHOP
     $sql.= ')';
 
+    echo $sql;
+
     mysqli_query(initialConnection(), $sql);
 
 

@@ -38,6 +38,10 @@ function getInfoFieldValues($key, $value){
 };
 
 function pushToDatabase($keys, $values){
+echo '<pre>';
+    print_r($keys);
+    print_r($values);
+echo '</pre>';
 
     $sql = 'INSERT INTO `'.$values[0].'`(`PID`,';
     foreach ($keys as $categories){

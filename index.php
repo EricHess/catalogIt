@@ -23,8 +23,6 @@
 <div class="mainCatalog">
     Create Your Categories (Title already included)
     <form method='post' class="category">
-        <input type='hidden' name='category_title' value="PID" /><br>
-        <input type='hidden' name='category_title' value="TABLENAME" /><br>
         <input type='hidden' name='category_title' value="Title" /><br>
 
 <?php
@@ -44,8 +42,11 @@ $indexController::getIndexValues();
 <!--
 --UPDATES FOR NOW--
 *AUTO FILL IN BOXES BASED ON WHAT IS IN THE DATABASE IF COOKIE'D
-Add in new column if new one is added in index.php
-Delete row functionality
+
+Get the initial creation of the database working.. Currently I have to create the first row
+If PID and Table Name do not exist, create the columns
+When new column is added, add the new value on page 2
+Add new entry when a new row is created on page 2
 
 --UPDATES FOR LATER--
 BUILD LOGIN FUNCTIONALITY

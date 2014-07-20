@@ -39,7 +39,13 @@ class mainIndex {
     }
 
 
-}
+};
+
+class rowPage{
+
+
+
+};
 
 //GET COOKIES WORKING FOR TABLE NAME
 //CHANGE VALUES IF THEY ARE CHANGED FOR ROWS NAMES (GET INDEX VALUE RETURN)
