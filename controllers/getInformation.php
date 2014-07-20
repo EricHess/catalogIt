@@ -43,6 +43,8 @@ echo '<pre>';
     print_r($values);
 echo '</pre>';
 
+    //TODO --INSERT INTO IF IT IS A NEW ROW --UPDATE IF IT IS AN EDIT OR ADDITION
+
     $sql = 'INSERT INTO `'.$values[0].'`(`PID`,';
     foreach ($keys as $categories){
         $sql .= '`'.$categories.'`,';
@@ -61,7 +63,6 @@ echo '</pre>';
     //CLOSE UP SHOP
     $sql.= ')';
 
-    echo $sql;
     mysqli_query(initialConnection(), $sql);
 }
 

@@ -112,10 +112,8 @@ $firstValues = [];
             if(count($firstValues) < count($categoryPackage)){
                 $differences = array_diff($categoryPackage,$firstValues);
                 updateTable($differences, 'table5060');
-                echo 'updated';
             } else {
                 $differences = array_diff($firstValues, $categoryPackage);
-                print_r($differences);
                 deleteTable($differences, 'table5060');
             }
 
@@ -123,6 +121,8 @@ $firstValues = [];
         // // IDEAS:
         // // Gather all PIDs in database, use them to return all rows, push each row in to an array, pass that array
         // // MYSQLi fetch array
+
+        //currently updateTable creates a new row.. Just do an update, pivoted on PID
         createNewUI(count($values), $categoryPackage, 'table5060');
     };
 

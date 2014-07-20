@@ -23,21 +23,31 @@ function allResults(){
 
 function createNewUI($paramCount, $categoryPackage, $table){
 
+    $sqlStatement = 'SELECT * from table5060';
+    $result = mysqli_query(initialConnection(), $sqlStatement);
+    $result = mysqli_fetch_all($result);
 
     echo '<div class="clr"></div>';
     echo '<form class="informationForm" method="post">';
-    echo '<div class="categoryInfoContainer">';
-    $i = 0;
+    foreach($result as $newRow){
 
-    echo '<input type="hidden" class="tableName" name="tableName" value="'.$table.'"/>';
-    while ($i < $paramCount && $row = getFullValues()){
-        foreach($categoryPackage as $param){
-                echo '<input type="text" value="'.$row[''.$param.''].'" class="categoryInfo"  name="'.$param.'" />';
-                $i++;
-            };
-        }
+        echo '<div class="categoryInfoContainer">';
+        $i = 0;
+        $v = 2;
 
-    echo '</div>';
+        echo '<input type="hidden" class="tableName" name="tableName" value="'.$table.'"/>';
+        while ($i < $paramCount){
+            foreach($categoryPackage as $param){
+                    echo '<input type="text" value="'.$newRow[$v].'" class="categoryInfo"  name="'.$param.'" />';
+                    $i++;
+                    $v++;
+
+                };
+            }
+        echo '</div>';
+
+    }
+
     echo '<input type="submit" value="Save" >';
     echo '</form>';
     echo '<div class="newCategoryInfoRow">Add A New Item</div>';
@@ -51,4 +61,3 @@ function getTableName(){
     global $tableName;
     return $tableName;
 }
-

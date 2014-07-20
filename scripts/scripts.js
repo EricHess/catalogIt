@@ -21,7 +21,7 @@ var catalog_it = function(){
             url:'controllers/getInformation.php',
             data: element.serialize(),
             success: function(data){
-                $('.mainCatalog').html(data);
+
             }
         })
     }
