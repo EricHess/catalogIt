@@ -31,7 +31,7 @@ class mainIndex {
 
     function getIndexValues()
     {
-        $i=3;
+        $i=2;
         while ($i < count(mainIndex::getKeyValues()) && $row = mainIndex::getKeyValues()){
             echo '<input type="text" name="category_'.$i.'" value="'.$row[$i].'"/><span class="delete">X</span><br>';
             $i++;

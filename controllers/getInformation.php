@@ -22,10 +22,24 @@ function postData(){
     $newData = file_get_contents('php://input');
     $newData = json_decode($newData);
 
+    $PIDs = mysqli_query(initialConnection(), "SELECT PID FROM table5060");
+    $PIDs = mysqli_fetch_all($PIDs);
 
-    echo'<pre>';
-    print_r($newData);
-    echo'</pre>';
+//    for($i=0;$i<count($newData);$i++){
+//        $sql = "UPDATE table5060 SET ".$newData[$i]->name."=".$newData[$i]->value." WHERE PID=".$PIDs[$i];
+//
+//        echo $sql;
+//        $i++;
+//    }
+
+    foreach($newData as $key=>$dataRows){
+
+        foreach($dataRows as $finalRows){
+            $sql = "UPDATE table5060 SET ".$finalRows->name." = '".$finalRows->value."' WHERE PID=".$PIDs[$key][0];
+            mysqli_query(initialConnection(),$sql);
+        }
+
+    }
 
 
     initNewInfoDataCreation();
@@ -33,6 +47,7 @@ function postData(){
 
 
 function initNewInfoDataCreation(){
+
 }
 
 

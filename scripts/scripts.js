@@ -34,7 +34,7 @@ var catalog_it = function(){
             url:'controllers/getInformation.php',
             data:JSON.stringify(dataArray),
             success: function(data){
-                $('.mainCatalog').html(data);
+
             }
         })
     }

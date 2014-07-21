@@ -33,10 +33,10 @@ function createNewUI($paramCount, $categoryPackage, $table){
 
         echo '<div class="categoryInfoContainer">';
         $i = 0;
-        $v = 2;
+        $v = 1;
 
-        echo '<input type="hidden" class="tableName" name="tableName" value="'.$table.'"/>';
         while ($i < $paramCount){
+
             foreach($categoryPackage as $param){
                     echo '<input type="text" value="'.$newRow[$v].'" class="categoryInfo"  name="'.$param.'" />';
                     $i++;

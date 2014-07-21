@@ -82,13 +82,14 @@ function saveCategoriesToDatabase($originalCount, $newCount){
 
     $testthis = mysqli_query(initialConnection(),"SELECT * FROM table5060");
 
-$firstValues = [];
+    $firstValues = [];
     //ACTUAL DATABASE VALUES FOR COLUMN NAMES
     if($testthis != null){
 
         $testthis = array_keys(mysqli_fetch_assoc($testthis));
 
-        for ($i=2;$i<count($testthis);$i++){
+
+        for ($i=1;$i<count($testthis);$i++){
             array_push($firstValues, $testthis[$i]);
         }
 
