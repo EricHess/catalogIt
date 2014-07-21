@@ -14,14 +14,27 @@ var catalog_it = function(){
         })
     }
 
+    Array.prototype.chunk = function(chunkSize) {
+        var array=this;
+        return [].concat.apply([],
+            array.map(function(elem,i) {
+                return i%chunkSize ? [] : [array.slice(i,i+chunkSize)];
+            })
+        );
+    }
 
-    catalog_it.prototype.ajaxInformationSubmission = function(element){
+    catalog_it.prototype.ajaxInformationSubmission = function(element, numberOfRows, numberOfFields){
+
+        var a = element.serializeArray();
+        var dataArray = a.chunk(numberOfFields/numberOfRows);
+
+
         $.ajax({
             type:'post',
             url:'controllers/getInformation.php',
-            data: element.serialize(),
+            data:JSON.stringify(dataArray),
             success: function(data){
-
+                $('.mainCatalog').html(data);
             }
         })
     }
@@ -30,6 +43,7 @@ var catalog_it = function(){
         element.before('<input type="text" name="category"/><br /> ')
     }
 
+    //todo: this currently clones all of the rows, just get the most previous
     catalog_it.prototype.clonePreviousRow = function(element, wrapperClass){
         var cloneItem = element.prev('form').children('.'+wrapperClass).html();
         element.prev('form').children('div.'+wrapperClass).after('<div class="'+wrapperClass+'">'+cloneItem+'</div>');
@@ -52,7 +66,9 @@ window.catalog_it = catalog_it;
         })
 
         $(document).on('submit','form.informationForm', function(){
-            catalog_it.prototype.ajaxInformationSubmission($(this));
+            var numberOfRows = $('.categoryInfoContainer').length;
+            var numberOfFields = $('.categoryInfoContainer input').length;
+            catalog_it.prototype.ajaxInformationSubmission($(this), numberOfRows, numberOfFields);
             return false;
         })
 

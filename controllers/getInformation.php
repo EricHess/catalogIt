@@ -20,59 +20,19 @@ if(isset($_POST)){
 function postData(){
 
     $newData = file_get_contents('php://input');
-    $newData = explode('&',$newData);
+    $newData = json_decode($newData);
 
-    foreach ($newData as $data){
-        $data = explode('=', $data);
-        getInfoFieldValues($data[0], $data[1]);
-    };
+
+    echo'<pre>';
+    print_r($newData);
+    echo'</pre>';
+
 
     initNewInfoDataCreation();
 }
 
-function getInfoFieldValues($key, $value){
-    global $keys;
-    global $values;
-    array_push($keys,$key);
-    array_push($values,$value);
-};
-
-function pushToDatabase($keys, $values){
-echo '<pre>';
-    print_r($keys);
-    print_r($values);
-echo '</pre>';
-
-    //TODO --INSERT INTO IF IT IS A NEW ROW --UPDATE IF IT IS AN EDIT OR ADDITION
-
-    $sql = 'INSERT INTO `'.$values[0].'`(`PID`,';
-    foreach ($keys as $categories){
-        $sql .= '`'.$categories.'`,';
-    }
-    //REMOVE THE FINAL COMMA
-    $sql = substr($sql, 0, -1);
-    //CLOSE UP SHOP
-    $sql.= ')';
-    $sql.='VALUES(';
-    $sql .='"'.rand(1,9999).'",';
-    foreach($values as $value){
-        $sql.= '"'.$value.'",';
-    }
-    //REMOVE THE FINAL COMMA
-    $sql = substr($sql, 0, -1);
-    //CLOSE UP SHOP
-    $sql.= ')';
-
-    mysqli_query(initialConnection(), $sql);
-}
 
 function initNewInfoDataCreation(){
-    global $keys;
-    global $values;
-    pushToDatabase($keys, $values);
 }
 
-//GRAB SERIZLIAED ARRAY
-//EXPLODE BASED ON AMPERSAND (EACH K-V PAIR) AND EQUALS SIGN(EACH VALUE OF K AND V)
-//INSERT INTO TABLE NAME WITH KEYS AS CATEGORY PACAKAGE AND VALUES AS WHAT TO PUT IN
-//SCALE IT
+
