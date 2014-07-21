@@ -41,6 +41,7 @@ function postData(){
 
     }
 
+//TODO: Allow for newly created rows to be added as a new row in the database
 
     initNewInfoDataCreation();
 }
