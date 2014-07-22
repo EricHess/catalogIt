@@ -52,7 +52,7 @@ var catalog_it = function(){
         //kick off ajax to create empty row
         $.ajax({
             type:'post',
-            url:'controllers/standaloneDatabaseActions.php'
+            url:'controllers/createEmptyRow.php'
         })
 
 
@@ -61,6 +61,20 @@ var catalog_it = function(){
 
     catalog_it.prototype.deleteRow = function(element){
       var inputRemove = element.prev('input')
+        inputRemove.remove();
+        element.remove();
+    };
+
+    catalog_it.prototype.deleteInfoRow = function(element){
+        var inputRemove = element.prev('div.categoryInfoContainer').children('input');
+
+        $.ajax({
+            type:'post',
+            url:'controllers/deleteFullRow.php',
+            data:inputRemove.serialize()
+        })
+
+
         inputRemove.remove();
         element.remove();
     };
@@ -94,6 +108,10 @@ window.catalog_it = catalog_it;
 
         $(document).on('click','span.delete',function(){
             catalog_it.prototype.deleteRow($(this));
+        });
+
+        $(document).on('click','span.deleteInfoRow',function(){
+            catalog_it.prototype.deleteInfoRow($(this));
         });
 
 

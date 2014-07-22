@@ -8,14 +8,12 @@
 
 require('mainIndex.php');
 
-class standaloneDatabaseActions {
+class createEmptyRow {
 
     function createEmptyRow(){
         mysqli_query(mainIndex::indexConnection(), "INSERT INTO `table5060` () VALUES()");
     }
 
-
-
-
-
 }
+
+new createEmptyRow();

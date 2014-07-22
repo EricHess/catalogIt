@@ -31,7 +31,7 @@ function createNewUI($paramCount, $categoryPackage, $table){
     echo '<form class="informationForm" method="post">';
     foreach($result as $newRow){
 
-        echo '<div class="categoryInfoContainer">';
+        echo '<div class="categoryInfoContainer lft">';
         $i = 0;
         $v = 1;
 
@@ -44,7 +44,7 @@ function createNewUI($paramCount, $categoryPackage, $table){
 
                 };
             }
-        echo '</div>';
+        echo '</div><span class="deleteInfoRow">X</span><div class="clr"></div>';
 
     }
 
