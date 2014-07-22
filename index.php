@@ -45,8 +45,6 @@ $indexController::getIndexValues();
 
 Get the initial creation of the database working.. Currently I have to create the first row
 If PID and Table Name do not exist, create the columns
-When new column is added, add the new value on page 2
-Add new entry when a new row is created on page 2
 
 --UPDATES FOR LATER--
 BUILD LOGIN FUNCTIONALITY

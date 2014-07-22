@@ -137,11 +137,3 @@ function initDataCreation($originalCount, $newCount){
     valueOutput();
     saveCategoriesToDatabase($originalCount, $newCount);
 }
-
-/*
- *
- * If the values count is the same as the post count, continue on
- * If the values count is NOT the same as the post count, update to make a new alter table statement
- * * * TODO: Diff the two arrays, grab the new items, alter table with them
- *
- */
