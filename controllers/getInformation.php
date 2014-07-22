@@ -25,13 +25,6 @@ function postData(){
     $PIDs = mysqli_query(initialConnection(), "SELECT PID FROM table5060");
     $PIDs = mysqli_fetch_all($PIDs);
 
-//    for($i=0;$i<count($newData);$i++){
-//        $sql = "UPDATE table5060 SET ".$newData[$i]->name."=".$newData[$i]->value." WHERE PID=".$PIDs[$i];
-//
-//        echo $sql;
-//        $i++;
-//    }
-
     foreach($newData as $key=>$dataRows){
 
         foreach($dataRows as $finalRows){

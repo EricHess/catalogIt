@@ -43,10 +43,20 @@ var catalog_it = function(){
         element.before('<input type="text" name="category"/><br /> ')
     }
 
-    //todo: this currently clones all of the rows, just get the most previous
     catalog_it.prototype.clonePreviousRow = function(element, wrapperClass){
         var cloneItem = element.prev('form').children('.'+wrapperClass).html();
-        element.prev('form').children('div.'+wrapperClass).after('<div class="'+wrapperClass+'">'+cloneItem+'</div>');
+        //create row
+        $('form input[type="submit"]').before('<div class="'+wrapperClass+' newrow">'+cloneItem+'</div>');
+        //clear values
+        $('.newrow').children('input').val('');
+        //kick off ajax to create empty row
+        $.ajax({
+            type:'post',
+            url:'controllers/standaloneDatabaseActions.php'
+        })
+
+
+        //TODO: initiate AJAX on click to create new empty row (with PID)
     }
 
     catalog_it.prototype.deleteRow = function(element){
