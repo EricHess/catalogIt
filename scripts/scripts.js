@@ -45,15 +45,27 @@ var catalog_it = function(){
 
     catalog_it.prototype.clonePreviousRow = function(element, wrapperClass){
         var cloneItem = element.prev('form').children('.'+wrapperClass).html();
-        //create row
-        $('form input[type="submit"]').before('<div class="'+wrapperClass+' newrow">'+cloneItem+'</div>');
-        //clear values
-        $('.newrow').children('input').val('');
-        //kick off ajax to create empty row
-        $.ajax({
-            type:'post',
-            url:'controllers/createEmptyRow.php'
-        })
+        if(!cloneItem == typeof undefined){
+            //create row
+            $('form input[type="submit"]').before('<div class="'+wrapperClass+' newrow">'+cloneItem+'</div>');
+            //clear values
+            $('.newrow').children('input').val('');
+            //kick off ajax to create empty row
+            $.ajax({
+                type:'post',
+                url:'controllers/createEmptyRow.php'
+            })
+        }else{
+            var noOfInputs = $('.categories .category').length;
+            var defaultInputs = $('<div />').addClass(wrapperClass+' newrow');
+            $('form.informationForm').prepend(defaultInputs);
+            for(var i=0;i<noOfInputs;i++){
+                //Todo: continue here.. add in the correct number of inputs
+                var newInputs = $('<input type="text"/>');
+                $('.newrow').prepend(newInputs);
+
+            }
+        }
 
 
         //TODO: initiate AJAX on click to create new empty row (with PID)

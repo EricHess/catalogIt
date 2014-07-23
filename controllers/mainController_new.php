@@ -23,12 +23,13 @@ function allResults(){
 
 function createNewUI($paramCount, $categoryPackage, $table){
 
-    $sqlStatement = 'SELECT * from table5060';
+    $sqlStatement = 'SELECT * from table5062';
     $result = mysqli_query(initialConnection(), $sqlStatement);
     $result = mysqli_fetch_all($result);
 
     echo '<div class="clr"></div>';
     echo '<form class="informationForm" method="post">';
+    echo $paramCount;
     foreach($result as $newRow){
 
         echo '<div class="categoryInfoContainer lft">';

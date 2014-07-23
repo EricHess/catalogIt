@@ -18,7 +18,7 @@ function getFullValues(){
         $tableNameCookie = $_COOKIE["table_name"];
     };
 
-    $sqlStatement = 'SELECT * from table5060';
+    $sqlStatement = 'SELECT * from table5062';
     $result = mysqli_query(initialConnection(), $sqlStatement);
     $fullValues = mysqli_fetch_assoc($result);
 

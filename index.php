@@ -6,8 +6,7 @@
  * Time: 11:38 AM
  */
 
-    require('controllers/mainIndex.php');
-    $indexController = new mainIndex();
+
 
 ?>
 
@@ -26,8 +25,10 @@
         <input type='hidden' name='category_title' value="Title" /><br>
 
 <?php
-$indexController::indexConnection();
-$indexController::getIndexValues();
+require('controllers/mainIndex.php');
+new mainIndex();
+mainIndex::getKeyValues();
+mainIndex::getIndexValues();
 ?>
 
 
@@ -45,6 +46,11 @@ $indexController::getIndexValues();
 
 Get the initial creation of the database working.. Currently I have to create the first row
 If PID and Table Name do not exist, create the columns
+
+todo: Allow for different special characters, including spaces and bangs
+todo: stylize a nice UI
+todo: next steps
+todo: allow for auto jumping to different steps of the UI
 
 --UPDATES FOR LATER--
 BUILD LOGIN FUNCTIONALITY

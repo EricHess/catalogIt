@@ -11,7 +11,7 @@ require('mainIndex.php');
 class createEmptyRow {
 
     function createEmptyRow(){
-        mysqli_query(mainIndex::indexConnection(), "INSERT INTO `table5060` () VALUES()");
+        mysqli_query(mainIndex::indexConnection(), "INSERT INTO `table5062` () VALUES()");
     }
 
 }

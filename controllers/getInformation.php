@@ -22,13 +22,13 @@ function postData(){
     $newData = file_get_contents('php://input');
     $newData = json_decode($newData);
 
-    $PIDs = mysqli_query(initialConnection(), "SELECT PID FROM table5060");
+    $PIDs = mysqli_query(initialConnection(), "SELECT PID FROM table5062");
     $PIDs = mysqli_fetch_all($PIDs);
 
     foreach($newData as $key=>$dataRows){
 
         foreach($dataRows as $finalRows){
-            $sql = "UPDATE table5060 SET ".$finalRows->name." = '".$finalRows->value."' WHERE PID=".$PIDs[$key][0];
+            $sql = "UPDATE table5062 SET ".$finalRows->name." = '".$finalRows->value."' WHERE PID=".$PIDs[$key][0];
             mysqli_query(initialConnection(),$sql);
         }
 

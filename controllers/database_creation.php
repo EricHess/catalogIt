@@ -37,7 +37,7 @@ function updateTable($newCategoryPackage, $tableName){
     }
 
     foreach($newCategoryPackage as $updates){
-        $sql = "ALTER TABLE table5060 ADD ".$updates." VARCHAR(60);";
+        $sql = "ALTER TABLE table5062 ADD ".$updates." VARCHAR(60);";
         mysqli_query(initialConnection(), $sql);
     }
 
@@ -50,7 +50,7 @@ function deleteTable($newCategoryPackage, $tableName){
     }
 
     foreach($newCategoryPackage as $updates){
-        $sql = "ALTER TABLE table5060 DROP COLUMN ".$updates;
+        $sql = "ALTER TABLE table5062 DROP COLUMN ".$updates;
         mysqli_query(initialConnection(), $sql);
     }
 

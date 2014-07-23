@@ -18,7 +18,7 @@ if(isset($_POST)){
 
 function postData(){
 
-    $initialCount = mysqli_query(initialConnection(),"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'table5060'");
+    $initialCount = mysqli_query(initialConnection(),"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'table5062'");
     $initialCount = mysqli_fetch_assoc($initialCount);
 
 
@@ -80,13 +80,15 @@ function saveCategoriesToDatabase($originalCount, $newCount){
     };
 
 
-    $testthis = mysqli_query(initialConnection(),"SELECT * FROM table5060");
+    $testthis = mysqli_query(initialConnection(),"SELECT * FROM table5062");
+
+
 
     $firstValues = [];
     //ACTUAL DATABASE VALUES FOR COLUMN NAMES
     if($testthis != null){
 
-        $testthis = array_keys(mysqli_fetch_assoc($testthis));
+        $testthis = array_keys(mysqli_fetch_all($testthis));
 
 
         for ($i=1;$i<count($testthis);$i++){
@@ -107,24 +109,20 @@ function saveCategoriesToDatabase($originalCount, $newCount){
     };
 
     if(count($differencesAdd) <= 0 && count($differencesDelete) <= 0 ){
-        createNewTable($categoryPackage, 'table5060');
-        createNewUI(count($values), $categoryPackage, 'table5060');
+        createNewTable($categoryPackage, 'table5062');
+        createNewUI(count($values), $categoryPackage, 'table5062');
     } else{
             if(count($firstValues) < count($categoryPackage)){
                 $differences = array_diff($categoryPackage,$firstValues);
-                updateTable($differences, 'table5060');
+                updateTable($differences, 'table5062');
             } else {
                 $differences = array_diff($firstValues, $categoryPackage);
-                deleteTable($differences, 'table5060');
+                deleteTable($differences, 'table5062');
             }
 
-        //need to pass in array of arrays for category package so that multiple rows can be made
-        // // IDEAS:
-        // // Gather all PIDs in database, use them to return all rows, push each row in to an array, pass that array
-        // // MYSQLi fetch array
 
-        //currently updateTable creates a new row.. Just do an update, pivoted on PID
-        createNewUI(count($values), $categoryPackage, 'table5060');
+
+        createNewUI(count($values), $categoryPackage, 'table5062');
     };
 
 

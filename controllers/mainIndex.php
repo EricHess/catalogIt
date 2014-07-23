@@ -21,21 +21,45 @@ class mainIndex {
             $tableNameCookie = $_COOKIE["table_name"];
         };
 
-        $sqlStatement = 'SELECT * from table5060';
+        $sqlStatement = 'SELECT * from table5062';
         $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
-        $fullValues = mysqli_fetch_assoc($result);
-        $keys = array_keys($fullValues);
-        return $keys;
+        if($result){
+            $fullValues = mysqli_fetch_assoc($result);
+            if($fullValues != null){
+                $keys = array_keys($fullValues);
+
+                return $keys;
+            }
+        } elseif(!$result){
+            $sqlStatement = 'CREATE TABLE table5062(PID int)';
+            $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
+            $sqlStatement = 'ALTER TABLE `table5062` ADD PRIMARY KEY(`PID`)';
+            $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
+
+            $sqlStatement = 'SELECT * from table5062';
+            $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
+            if($result){
+                $fullValues = mysqli_fetch_assoc($result);
+
+                if($fullValues != null){
+                    $keys = array_keys($fullValues);
+                    return $keys;
+                }
+            }
+
+        }
     }
 
 
     function getIndexValues()
     {
-        $i=2;
-        while ($i < count(mainIndex::getKeyValues()) && $row = mainIndex::getKeyValues()){
-            echo '<input type="text" name="category_'.$i.'" value="'.$row[$i].'"/><span class="delete">X</span><br>';
-            $i++;
-        }
+        if(count(mainIndex::getKeyValues()>0)){
+            $i=2;
+            while ($i < count(mainIndex::getKeyValues()) && $row = mainIndex::getKeyValues()){
+                echo '<input type="text" name="category_'.$i.'" value="'.$row[$i].'"/><span class="delete">X</span><br>';
+                $i++;
+            }
+        }else echo 'hey';
     }
 
 
