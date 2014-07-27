@@ -15,31 +15,34 @@ class mainIndex {
     }
 
     function getKeyValues(){
-        if(!$_COOKIE["table_name"]){
-            setcookie("table_name",getTableName(), time()+1000000);
-        }else{
-            $tableNameCookie = $_COOKIE["table_name"];
-        };
+//        if(!$_COOKIE["table_name"]){
+//            setcookie("table_name",getTableName(), time()+1000000);
+//        }else{
+//            $tableNameCookie = $_COOKIE["table_name"];
+//        };
 
-        $sqlStatement = 'SELECT * from table5062';
+        $sqlStatement = 'SELECT * FROM `table5062`';
         $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
+
         if($result){
             $fullValues = mysqli_fetch_assoc($result);
             if($fullValues != null){
-                $keys = array_keys($fullValues);
+            $keys = array_keys($fullValues);
+            return $keys;
+            }else{echo 'no keys yet, create some!';}
 
-                return $keys;
-            }
         } elseif(!$result){
             $sqlStatement = 'CREATE TABLE table5062(PID int)';
             $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
             $sqlStatement = 'ALTER TABLE `table5062` ADD PRIMARY KEY(`PID`)';
             $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
+            $sqlStatement = 'ALTER TABLE `table5062` CHANGE `PID` `PID` INT(11) NOT NULL AUTO_INCREMENT;';
+            $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
 
-            $sqlStatement = 'SELECT * from table5062';
+            $sqlStatement = 'SELECT * from `table5062`';
             $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
             if($result){
-                $fullValues = mysqli_fetch_assoc($result);
+                $fullValues = mysqli_fetch_all($result);
 
                 if($fullValues != null){
                     $keys = array_keys($fullValues);
@@ -59,7 +62,7 @@ class mainIndex {
                 echo '<input type="text" name="category_'.$i.'" value="'.$row[$i].'"/><span class="delete">X</span><br>';
                 $i++;
             }
-        }else echo 'hey';
+        }
     }
 
 

@@ -28,13 +28,14 @@ var catalog_it = function(){
         var a = element.serializeArray();
         var dataArray = a.chunk(numberOfFields/numberOfRows);
 
+//FIGURE OUT WHY THIS IS NOT WORKING
 
         $.ajax({
             type:'post',
             url:'controllers/getInformation.php',
             data:JSON.stringify(dataArray),
             success: function(data){
-
+                $('body').append(data);
             }
         })
     }
@@ -47,6 +48,7 @@ var catalog_it = function(){
         var cloneItem = element.prev('form').children('.'+wrapperClass).html();
         if(!cloneItem == typeof undefined){
             //create row
+            //figure out why this is putting the row on top of the other ones
             $('form input[type="submit"]').before('<div class="'+wrapperClass+' newrow">'+cloneItem+'</div>');
             //clear values
             $('.newrow').children('input').val('');
@@ -58,13 +60,26 @@ var catalog_it = function(){
         }else{
             var noOfInputs = $('.categories .category').length;
             var defaultInputs = $('<div />').addClass(wrapperClass+' newrow');
+            var inputNames = [];
             $('form.informationForm').prepend(defaultInputs);
+
+            $('.categories div').each(function(){
+                inputNames.push($(this).text());
+            })
+            inputNames.reverse();
+
             for(var i=0;i<noOfInputs;i++){
-                //Todo: continue here.. add in the correct number of inputs
-                var newInputs = $('<input type="text"/>');
+//figure out why this is duplicating things
+
+                var newInputs = $('<input type="text" name="'+inputNames[i]+' "/>');
                 $('.newrow').prepend(newInputs);
 
             }
+            //kick off ajax to create empty row
+            $.ajax({
+                type:'post',
+                url:'controllers/createEmptyRow.php'
+            })
         }
 
 

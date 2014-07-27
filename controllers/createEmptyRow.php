@@ -12,8 +12,9 @@ class createEmptyRow {
 
     function createEmptyRow(){
         mysqli_query(mainIndex::indexConnection(), "INSERT INTO `table5062` () VALUES()");
+echo 'created';
     }
 
 }
-
-new createEmptyRow();
+$newrow = new createEmptyRow();
+$newrow->createEmptyRow();

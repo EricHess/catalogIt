@@ -23,14 +23,16 @@
     Create Your Categories (Title already included)
     <form method='post' class="category">
         <input type='hidden' name='category_title' value="Title" /><br>
-
+<pre>
 <?php
 require('controllers/mainIndex.php');
 new mainIndex();
+
 mainIndex::getKeyValues();
 mainIndex::getIndexValues();
-?>
 
+?>
+</pre>
 
         <div class="addNewCategoryRow">NEW ROW</div>
         <input type='submit' value='Next Step' />

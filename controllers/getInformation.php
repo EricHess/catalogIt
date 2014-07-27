@@ -18,28 +18,20 @@ if(isset($_POST)){
 
 
 function postData(){
-
     $newData = file_get_contents('php://input');
     $newData = json_decode($newData);
 
     $PIDs = mysqli_query(initialConnection(), "SELECT PID FROM table5062");
+
     $PIDs = mysqli_fetch_all($PIDs);
 
-    foreach($newData as $key=>$dataRows){
 
+
+    foreach($newData as $key=>$dataRows){
         foreach($dataRows as $finalRows){
             $sql = "UPDATE table5062 SET ".$finalRows->name." = '".$finalRows->value."' WHERE PID=".$PIDs[$key][0];
             mysqli_query(initialConnection(),$sql);
         }
 
     }
-
-    initNewInfoDataCreation();
 }
-
-
-function initNewInfoDataCreation(){
-
-}
-
-
