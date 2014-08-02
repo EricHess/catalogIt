@@ -3,7 +3,17 @@ var catalog_it = function(){
 
 }
 
+    Array.prototype.chunk = function(chunkSize) {
+        var array=this;
+        return [].concat.apply([],
+            array.map(function(elem,i) {
+                return i%chunkSize ? [] : [array.slice(i,i+chunkSize)];
+            })
+        );
+    }
+
     catalog_it.prototype.ajaxCategorySubmission = function(element){
+
         $.ajax({
             type:'post',
             url:'controllers/getCategories.php',
@@ -14,21 +24,10 @@ var catalog_it = function(){
         })
     }
 
-    Array.prototype.chunk = function(chunkSize) {
-        var array=this;
-        return [].concat.apply([],
-            array.map(function(elem,i) {
-                return i%chunkSize ? [] : [array.slice(i,i+chunkSize)];
-            })
-        );
-    }
-
     catalog_it.prototype.ajaxInformationSubmission = function(element, numberOfRows, numberOfFields){
 
         var a = element.serializeArray();
         var dataArray = a.chunk(numberOfFields/numberOfRows);
-
-//FIGURE OUT WHY THIS IS NOT WORKING
 
         $.ajax({
             type:'post',
@@ -41,49 +40,43 @@ var catalog_it = function(){
     }
 
     catalog_it.prototype.addNewCategoryRow = function(element){
-        element.before('<input type="text" name="category"/><br /> ')
-    }
+        var randoms = Math.ceil(Math.random()*100);
+        element.before('<input type="text" name="category'+randoms+'"/><br /> ')    }
 
     catalog_it.prototype.clonePreviousRow = function(element, wrapperClass){
-        var cloneItem = element.prev('form').children('.'+wrapperClass).html();
-        if(!cloneItem == typeof undefined){
+        var noOfInputs = $('.categories .category').length;
+        var defaultInputs = $('<div />').addClass(wrapperClass);
+        var inputNames = [];
+        var cloneItem = element.prev('form').children('.'+wrapperClass);
+
+        if(cloneItem.length > 0){
             //create row
-            //figure out why this is putting the row on top of the other ones
-            $('form input[type="submit"]').before('<div class="'+wrapperClass+' newrow">'+cloneItem+'</div>');
+            $('form input[type="submit"]').before('<div class="'+wrapperClass+' newrow">'+cloneItem.html()+'</div>');
             //clear values
             $('.newrow').children('input').val('');
-            //kick off ajax to create empty row
-            $.ajax({
-                type:'post',
-                url:'controllers/createEmptyRow.php'
-            })
+
         }else{
-            var noOfInputs = $('.categories .category').length;
-            var defaultInputs = $('<div />').addClass(wrapperClass+' newrow');
-            var inputNames = [];
+            defaultInputs.addClass('initialRow');
             $('form.informationForm').prepend(defaultInputs);
 
             $('.categories div').each(function(){
                 inputNames.push($(this).text());
             })
+
             inputNames.reverse();
 
             for(var i=0;i<noOfInputs;i++){
-//figure out why this is duplicating things
-
                 var newInputs = $('<input type="text" name="'+inputNames[i]+' "/>');
-                $('.newrow').prepend(newInputs);
-
+                $('.initialRow').prepend(newInputs);
             }
+            $('.initialRow').removeClass("initialRow");
+        }
+
             //kick off ajax to create empty row
             $.ajax({
                 type:'post',
                 url:'controllers/createEmptyRow.php'
             })
-        }
-
-
-        //TODO: initiate AJAX on click to create new empty row (with PID)
     }
 
     catalog_it.prototype.deleteRow = function(element){
@@ -101,15 +94,15 @@ var catalog_it = function(){
             data:inputRemove.serialize()
         })
 
-
         inputRemove.remove();
+        element.prev('div.categoryInfoContainer').remove();
         element.remove();
     };
 
 window.catalog_it = catalog_it;
 
 
-
+//EVENT HANDLERS
     $(document).ready(function(){
         $('form.category').submit(function(){
             catalog_it.prototype.ajaxCategorySubmission($(this));
@@ -122,7 +115,6 @@ window.catalog_it = catalog_it;
             catalog_it.prototype.ajaxInformationSubmission($(this), numberOfRows, numberOfFields);
             return false;
         })
-
 
         $('.addNewCategoryRow').click(function(){
             catalog_it.prototype.addNewCategoryRow($(this));

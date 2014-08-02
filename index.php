@@ -22,17 +22,17 @@
 <div class="mainCatalog">
     Create Your Categories (Title already included)
     <form method='post' class="category">
-        <input type='hidden' name='category_title' value="Title" /><br>
-<pre>
+        <input style="display:none" type='text' name='category_title' value="Title" /><br>
+
 <?php
 require('controllers/mainIndex.php');
-new mainIndex();
+$mainIndexController = new mainIndex();
 
-mainIndex::getKeyValues();
-mainIndex::getIndexValues();
+$mainIndexController->getKeyValues();
+$mainIndexController->getIndexValues();
 
 ?>
-</pre>
+
 
         <div class="addNewCategoryRow">NEW ROW</div>
         <input type='submit' value='Next Step' />
@@ -44,15 +44,12 @@ mainIndex::getIndexValues();
 
 <!--
 --UPDATES FOR NOW--
-*AUTO FILL IN BOXES BASED ON WHAT IS IN THE DATABASE IF COOKIE'D
-
-Get the initial creation of the database working.. Currently I have to create the first row
-If PID and Table Name do not exist, create the columns
-
+todo: refactor "GetCategories.php" to make it work more efficiently
 todo: Allow for different special characters, including spaces and bangs
 todo: stylize a nice UI
 todo: next steps
 todo: allow for auto jumping to different steps of the UI
+todo: insta-save when the last input field is focus/blurred with data
 
 --UPDATES FOR LATER--
 BUILD LOGIN FUNCTIONALITY

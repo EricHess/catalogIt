@@ -21,15 +21,17 @@ class mainIndex {
 //            $tableNameCookie = $_COOKIE["table_name"];
 //        };
 
-        $sqlStatement = 'SELECT * FROM `table5062`';
-        $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
+        $sqlStatement = 'Describe `table5062`';
+        $result = mysqli_query($this->indexConnection(), $sqlStatement);
 
         if($result){
-            $fullValues = mysqli_fetch_assoc($result);
-            if($fullValues != null){
-            $keys = array_keys($fullValues);
-            return $keys;
-            }else{echo 'no keys yet, create some!';}
+            $columnArray = [];
+            $values = mysqli_fetch_all($result);
+            foreach($values as $columnNames){
+                array_push($columnArray, $columnNames[0]);
+            }
+
+            return $columnArray;
 
         } elseif(!$result){
             $sqlStatement = 'CREATE TABLE table5062(PID int)';
@@ -38,7 +40,6 @@ class mainIndex {
             $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
             $sqlStatement = 'ALTER TABLE `table5062` CHANGE `PID` `PID` INT(11) NOT NULL AUTO_INCREMENT;';
             $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
-
             $sqlStatement = 'SELECT * from `table5062`';
             $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
             if($result){
@@ -75,7 +76,4 @@ class rowPage{
 };
 
 //GET COOKIES WORKING FOR TABLE NAME
-//CHANGE VALUES IF THEY ARE CHANGED FOR ROWS NAMES (GET INDEX VALUE RETURN)
-//ENABLE ADDING NEW ROWS IF NEW ONES ARE ADDED
-//SAME FOR THE SECOND PAGE
 //TODO: ORGANIZE THIS!

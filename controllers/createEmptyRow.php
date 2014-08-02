@@ -10,11 +10,11 @@ require('mainIndex.php');
 
 class createEmptyRow {
 
-    function createEmptyRow(){
+    function createEmptyRows(){
         mysqli_query(mainIndex::indexConnection(), "INSERT INTO `table5062` () VALUES()");
-echo 'created';
     }
 
 }
+
 $newrow = new createEmptyRow();
-$newrow->createEmptyRow();
+$newrow->createEmptyRows();

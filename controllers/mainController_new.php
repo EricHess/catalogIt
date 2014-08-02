@@ -9,19 +9,9 @@
 require_once('database_connection.php');
 require_once('database_creation.php');
 
+class mainController{
 
-$tableName = 'table'.rand(0,10000);
-
-
-//FOR DEBUGGING
-function allResults(){
-
-};
-
-
-
-
-function createNewUI($paramCount, $categoryPackage, $table){
+function createNewUI($paramCount, $categoryPackage){
 
     $sqlStatement = 'SELECT * from table5062';
     $result = mysqli_query(initialConnection(), $sqlStatement);
@@ -29,7 +19,6 @@ function createNewUI($paramCount, $categoryPackage, $table){
 
     echo '<div class="clr"></div>';
     echo '<form class="informationForm" method="post">';
-    echo $paramCount;
     foreach($result as $newRow){
 
         echo '<div class="categoryInfoContainer lft">';
@@ -55,10 +44,12 @@ function createNewUI($paramCount, $categoryPackage, $table){
 
 
 
-};
+}
 
 
 function getTableName(){
     global $tableName;
     return $tableName;
+}
+
 }

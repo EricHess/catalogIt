@@ -4,134 +4,60 @@
  * User: eric
  * Date: 7/6/14
  * Time: 8:33 AM
+ * Purpose: This file should take the categories from step 1 and save them as columns in the database
+ * Purpose 2: Then build out the UI for the categories along the top of step 2
  */
 
-require_once('mainController_new.php');
+require('mainController_new.php');
 
-$values = [];
-$keys=[];
+$globalArray = [];
+class getCategories {
 
-//If the post is set, run the functions
-if(isset($_POST)){
-    postData();
-}
+    function indexConnection(){
+        $connect = mysqli_connect('localhost','root','','catalog_it','3306');
+        return $connect;
+    }
 
-function postData(){
+    function outputCategoriesToDatabase(){
+        foreach($_POST as $categories){
+            $sql = "ALTER TABLE table5062 ADD ".$categories." VARCHAR(60);";
+            mysqli_query($this->indexConnection(), $sql);
+            $this->pushCategoriesToArray($categories);
+        }
+        global $globalArray;
+        $this->createNewUIWithCategories($globalArray);
+    }
 
-    $initialCount = mysqli_query(initialConnection(),"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'table5062'");
-    $initialCount = mysqli_fetch_assoc($initialCount);
+    function pushCategoriesToArray($category){
+        global $globalArray;
+        array_push($globalArray, $category);
+    }
 
+    function createNewUIWithCategories($category){
+        global $globalArray;
+        echo '<div class="categories">';
 
-    $newData = file_get_contents('php://input');
-    $newData = explode('&',$newData);
-
-
-    foreach ($newData as $data){
-        $data = explode('=', $data);
-        getFieldValues($data[0], $data[1]);
-    };
-
-    initDataCreation($initialCount, count($newData));
-}
-
-function getFieldValues($key, $value){
-    global $values;
-    global $keys;
-    array_push($keys, $key);
-    array_push($values,$value);
-};
-
-function getValues(){
-    global $values;
-    return $values;
-}
-
-function getKeys(){
-  global $keys;
-  return $keys;
-};
-
-function countRows(){
-
-};
-
-function valueOutput(){
-    global $values;
-
-    echo '<div class="categories">';
-
-        foreach ($values as $category){
+        foreach ($globalArray as $category){
             echo "<div class='category category_".$category."'>";
-                echo $category;
+            echo $category;
             echo "</div>";
         };
 
-    echo '</div>';
-
-}
-
-
-function saveCategoriesToDatabase($originalCount, $newCount){
-    global $values;
-    $categoryPackage = [];
-    $tableNameCookie = null;
-    foreach ($values as $category){
-        array_push($categoryPackage, $category);
-    };
-
-
-    $testthis = mysqli_query(initialConnection(),"SELECT * FROM table5062");
-
-
-
-    $firstValues = [];
-    //ACTUAL DATABASE VALUES FOR COLUMN NAMES
-    if($testthis != null){
-
-        $testthis = array_keys(mysqli_fetch_all($testthis));
-
-
-        for ($i=1;$i<count($testthis);$i++){
-            array_push($firstValues, $testthis[$i]);
-        }
-
-        $differencesAdd = array_diff($categoryPackage,$firstValues);
-        $differencesDelete = array_diff($firstValues, $categoryPackage);
-
-
+        echo '</div>';
+        $this->createNewUI($globalArray);
     }
 
-    //CREATE A COOKIE IF IT DOES NOT ALREADY EXIST
-    if(!$_COOKIE["table_name"]){
-        setcookie("table_name",getTableName(), time()+1000000);
-    }else{
-        $tableNameCookie = $_COOKIE["table_name"];
-    };
+    function createNewUI($categories){
 
-    if(count($differencesAdd) <= 0 && count($differencesDelete) <= 0 ){
-        createNewTable($categoryPackage, 'table5062');
-        createNewUI(count($values), $categoryPackage, 'table5062');
-    } else{
-            if(count($firstValues) < count($categoryPackage)){
-                $differences = array_diff($categoryPackage,$firstValues);
-                updateTable($differences, 'table5062');
-            } else {
-                $differences = array_diff($firstValues, $categoryPackage);
-                deleteTable($differences, 'table5062');
-            }
-
-
-
-        createNewUI(count($values), $categoryPackage, 'table5062');
-    };
-
-
-
+    }
 }
 
+$cats = new getCategories();
+$cats->outputCategoriesToDatabase();
 
-function initDataCreation($originalCount, $newCount){
-    getValues();
-    valueOutput();
-    saveCategoriesToDatabase($originalCount, $newCount);
-}
+
+
+$ui = new mainController();
+$ui->createNewUI(count($globalArray),$globalArray);
+//NEED TO RUN CREATE NEW UI FROM MAINCTONROLLER_NEW.PHP TO RENDER ROWS
+//OR NEED TO RECREATE WITH REFACTORED
