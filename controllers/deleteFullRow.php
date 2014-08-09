@@ -12,7 +12,7 @@ class deleteFullRow {
     public function deleteFullRow(){
         $newData = $_POST;
 
-            $sql = "DELETE FROM table5062 WHERE ";
+            $sql = "DELETE FROM ".$_SESSION['table_name']." WHERE ";
             foreach($newData as $key=>$datapoints){
             $sql .= $key;
             $sql .= '= ';

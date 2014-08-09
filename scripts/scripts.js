@@ -12,6 +12,39 @@ var catalog_it = function(){
         );
     }
 
+    catalog_it.prototype.userCreate = function(element){
+        $.ajax({
+            type:'post',
+            url:'controllers/userCreate.php',
+            data:element.serialize(),
+            success: function(data){
+                window.location = '/catalogIt';
+            }
+        })
+    }
+
+
+    catalog_it.prototype.userLogin = function(element){
+        $.ajax({
+            type:'post',
+            url:'controllers/userLogin.php',
+            data:element.serialize(),
+            success: function(data){
+                window.location = '/catalogIt';
+            }
+        })
+    }
+
+    catalog_it.prototype.destroySession = function(){
+        $.ajax({
+            type:'post',
+            url:'controllers/destroySession.php',
+            success: function(data){
+                window.location='/catalogIt';
+            }
+        })
+    };
+
     catalog_it.prototype.ajaxCategorySubmission = function(element){
 
         $.ajax({
@@ -109,6 +142,16 @@ window.catalog_it = catalog_it;
             return false;
         })
 
+        $('form#createUser').submit(function(){
+            catalog_it.prototype.userCreate($(this));
+            return false;
+        })
+
+        $('form#loginForm').submit(function(){
+            catalog_it.prototype.userLogin($(this));
+            return false;
+        })
+
         $(document).on('submit','form.informationForm', function(){
             var numberOfRows = $('.categoryInfoContainer').length;
             var numberOfFields = $('.categoryInfoContainer input').length;
@@ -131,6 +174,11 @@ window.catalog_it = catalog_it;
 
         $(document).on('click','span.deleteInfoRow',function(){
             catalog_it.prototype.deleteInfoRow($(this));
+        });
+
+
+        $(document).on('click','.logout',function(){
+            catalog_it.prototype.destroySession();
         });
 
 

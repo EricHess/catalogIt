@@ -8,12 +8,13 @@
 
 require_once('database_connection.php');
 require_once('database_creation.php');
-
+session_start();
 class mainController{
 
 function createNewUI($paramCount, $categoryPackage){
 
-    $sqlStatement = 'SELECT * from table5062';
+    $sqlStatement = 'SELECT * from '.$_SESSION['table_name'];
+    echo $sqlStatement;
     $result = mysqli_query(initialConnection(), $sqlStatement);
     $result = mysqli_fetch_all($result);
 

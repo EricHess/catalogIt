@@ -7,11 +7,10 @@
  */
 
 require('mainIndex.php');
-
 class createEmptyRow {
 
     function createEmptyRows(){
-        mysqli_query(mainIndex::indexConnection(), "INSERT INTO `table5062` () VALUES()");
+        mysqli_query(mainIndex::indexConnection(), "INSERT INTO `".$_SESSION['table_name']."` () VALUES()");
     }
 
 }

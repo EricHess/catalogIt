@@ -21,7 +21,7 @@ function postData(){
     $newData = file_get_contents('php://input');
     $newData = json_decode($newData);
 
-    $PIDs = mysqli_query(initialConnection(), "SELECT PID FROM table5062");
+    $PIDs = mysqli_query(initialConnection(), "SELECT PID FROM ".$_SESSION['table_name']."");
 
     $PIDs = mysqli_fetch_all($PIDs);
 
@@ -29,7 +29,7 @@ function postData(){
 
     foreach($newData as $key=>$dataRows){
         foreach($dataRows as $finalRows){
-            $sql = "UPDATE table5062 SET ".$finalRows->name." = '".$finalRows->value."' WHERE PID=".$PIDs[$key][0];
+            $sql = "UPDATE ".$_SESSION['table_name']." SET ".$finalRows->name." = '".$finalRows->value."' WHERE PID=".$PIDs[$key][0];
             mysqli_query(initialConnection(),$sql);
         }
 

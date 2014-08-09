@@ -6,6 +6,7 @@
  * Time: 6:08 PM
  */
 
+session_start();
 
 class mainIndex {
 
@@ -14,43 +15,28 @@ class mainIndex {
         return $connect;
     }
 
+    function createAccountTable(){
+        $sql = 'CREATE TABLE users_table(PID int NOT NULL AUTO_INCREMENT PRIMARY KEY, tablename varchar(100), username varchar(35), password varchar (25), real_name varchar (125))';
+        mysqli_query($this->indexConnection(), $sql);
+    }
+
+
+
     function getKeyValues(){
-//        if(!$_COOKIE["table_name"]){
-//            setcookie("table_name",getTableName(), time()+1000000);
-//        }else{
-//            $tableNameCookie = $_COOKIE["table_name"];
-//        };
+        if($_SESSION){
+            $sqlStatement = 'Describe `'.$_SESSION['table_name'].'`';
+            $result = mysqli_query($this->indexConnection(), $sqlStatement);
 
-        $sqlStatement = 'Describe `table5062`';
-        $result = mysqli_query($this->indexConnection(), $sqlStatement);
-
-        if($result){
-            $columnArray = [];
-            $values = mysqli_fetch_all($result);
-            foreach($values as $columnNames){
-                array_push($columnArray, $columnNames[0]);
-            }
-
-            return $columnArray;
-
-        } elseif(!$result){
-            $sqlStatement = 'CREATE TABLE table5062(PID int)';
-            $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
-            $sqlStatement = 'ALTER TABLE `table5062` ADD PRIMARY KEY(`PID`)';
-            $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
-            $sqlStatement = 'ALTER TABLE `table5062` CHANGE `PID` `PID` INT(11) NOT NULL AUTO_INCREMENT;';
-            $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
-            $sqlStatement = 'SELECT * from `table5062`';
-            $result = mysqli_query(mainIndex::indexConnection(), $sqlStatement);
             if($result){
-                $fullValues = mysqli_fetch_all($result);
-
-                if($fullValues != null){
-                    $keys = array_keys($fullValues);
-                    return $keys;
+                $columnArray = [];
+                $values = mysqli_fetch_all($result);
+                foreach($values as $columnNames){
+                    array_push($columnArray, $columnNames[0]);
                 }
-            }
 
+                return $columnArray;
+
+            }
         }
     }
 

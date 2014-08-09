@@ -11,6 +11,7 @@
 require('mainController_new.php');
 
 $globalArray = [];
+//session_start();
 class getCategories {
 
     function indexConnection(){
@@ -20,7 +21,7 @@ class getCategories {
 
     function outputCategoriesToDatabase(){
         foreach($_POST as $categories){
-            $sql = "ALTER TABLE table5062 ADD ".$categories." VARCHAR(60);";
+            $sql = "ALTER TABLE ".$_SESSION['table_name']." ADD ".$categories." VARCHAR(60);";
             mysqli_query($this->indexConnection(), $sql);
             $this->pushCategoriesToArray($categories);
         }
