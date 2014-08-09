@@ -14,7 +14,6 @@ class mainController{
 function createNewUI($paramCount, $categoryPackage){
 
     $sqlStatement = 'SELECT * from '.$_SESSION['table_name'];
-    echo $sqlStatement;
     $result = mysqli_query(initialConnection(), $sqlStatement);
     $result = mysqli_fetch_all($result);
 

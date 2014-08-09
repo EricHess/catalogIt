@@ -65,14 +65,10 @@ class userCreate {
     }
 
     function setSession(){
-
-//        session_name('loggedInSession');
         session_start();
         $_SESSION['authorized'] = true;
         $_SESSION['table_name'] = $this->getTableName();
         $_SESSION['real_name'] = $this->getRealName();
-        echo "Session Started";
-        print_r($_SESSION);
     }
 
 }

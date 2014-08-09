@@ -12,7 +12,6 @@ class sessionDestroy{
         session_start();
         $_SESSION = array();
         session_destroy();
-        header('/catalog_it');
     }
 
 
